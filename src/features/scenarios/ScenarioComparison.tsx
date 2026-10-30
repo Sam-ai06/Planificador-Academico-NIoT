@@ -1,0 +1,17 @@
+import { totalWorkload, workloadLabel } from '../../services/workload';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAcademic } from '../../app/providers/AcademicProvider';
+import { Notice, PageTitle } from '../../components/ui/Shared';
+import { metrics, planWarnings } from '../planner/services/planning';
+import { PlanSummary, PlanningConstraints } from '../planner/AcademicPlanner';
+export function ScenarioComparison() {
+    const { state, setState, curriculum } = useAcademic();
+    const navigate = useNavigate();
+    const [left, setLeft] = useState('');
+    const [right, setRight] = useState('');
+    const [message, setMessage] = useState('');
+    const options = state.scenarios.filter(s => s.curriculumId === curriculum.id);
+    const a = options.find(s => s.id === (left || options[0]?.id)), b = options.find(s => s.id === (right || options[1]?.id));
+    return <><PageTitle eyebrow="DECIDE CON PERSPECTIVA" title="Comparar escenarios" description="Dos caminos, una decisión informada."/><PlanningConstraints />{message && <Notice>{message}</Notice>}{options.length < 2 && <Notice>Guarda al menos dos alternativas desde el planificador para compararlas.</Notice>}<div className="two-columns">{[a, b].map((s, i) => <section key={i}><label>Escenario {i + 1}<select value={s?.id || ''} onChange={e => (i === 0 ? setLeft : setRight)(e.target.value)}><option value="">Selecciona una alternativa</option>{options.map(x => <option key={x.id} value={x.id}>{x.name}</option>)}</select></label>{s && <><div className="panel"><h2>{s.name}</h2><p>{s.parameters.maxCourses} materias máximo por semestre</p><button className="primary" onClick={() => { setState(v => ({ ...v, plan: structuredClone(s) })); setMessage(`«${s.name}» es ahora el plan principal.`); }}>Usar como principal</button> <button onClick={() => { setState(v => ({ ...v, plan: structuredClone(s), profile: structuredClone(s.parameters) })); navigate('/planner'); }}>Modificar alternativa</button></div><PlanSummary plan={s}/></>}</section>)}</div>{a && b && <section className="panel table-wrap"><h2>Diferencias entre rutas</h2><table><thead><tr><th>Métrica</th><th>{a.name}</th><th>{b.name}</th></tr></thead><tbody>{(['semesters', 'credits', 'unlocked', 'remaining'] as const).map((key, i) => { const x = metrics(curriculum, a)[key], y = metrics(curriculum, b)[key]; return <tr className={x !== y ? 'different' : ''} key={key}><th>{['Semestres planificados', `Carga planificada (${workloadLabel(curriculum)})`, 'Materias desbloqueadas al finalizar', 'Materias sin planificar'][i]}</th><td>{x}</td><td>{y}</td></tr>; })}{Array.from({ length: Math.max(a.semesters.length, b.semesters.length) }, (_, i) => <tr key={i} className={JSON.stringify(a.semesters[i]?.courseIds) !== JSON.stringify(b.semesters[i]?.courseIds) ? 'different' : ''}><th>Semestre {i + 1}: materias / {workloadLabel(curriculum)}</th>{[a, b].map(s => <td key={s.id}>{s.semesters[i]?.courseIds.length || 0} / {totalWorkload(curriculum,s.semesters[i]?.courseIds||[]) || 0}</td>)}</tr>)}<tr><th>Advertencias con el perfil actual</th>{[a, b].map(s => <td key={s.id}>{planWarnings(curriculum, state.profile, s.semesters).join(' ') || 'Sin conflictos de prerrequisitos o carga.'}</td>)}</tr></tbody></table><small>La duración hasta graduación solo puede estimarse si todas las materias pendientes están planificadas. No incluye calendario ni oferta real.</small></section>}</>;
+}

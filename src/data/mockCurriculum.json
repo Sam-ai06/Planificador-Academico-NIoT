@@ -1,0 +1,23 @@
+{
+  "id": "software-demo", "name": "Ingeniería de Software", "institution": "Malla de demostración · NIoT",
+  "courses": [
+    {"id":"mat1","code":"MAT101","name":"Matemática I","credits":4,"semester":1,"prerequisites":[]},
+    {"id":"prog1","code":"INF101","name":"Fundamentos de programación","credits":4,"semester":1,"prerequisites":[],"area":"Desarrollo de software"},
+    {"id":"logic","code":"MAT102","name":"Lógica y matemática discreta","credits":3,"semester":1,"prerequisites":[]},
+    {"id":"comm","code":"HUM101","name":"Comunicación académica","credits":2,"semester":1,"prerequisites":[]},
+    {"id":"mat2","code":"MAT201","name":"Matemática II","credits":4,"semester":2,"prerequisites":["mat1"]},
+    {"id":"prog2","code":"INF201","name":"Programación orientada a objetos","credits":4,"semester":2,"prerequisites":["prog1"],"area":"Desarrollo de software"},
+    {"id":"stats","code":"MAT202","name":"Probabilidad y estadística","credits":3,"semester":2,"prerequisites":["mat1"],"area":"Ciencia de datos"},
+    {"id":"arch","code":"INF202","name":"Arquitectura de computadores","credits":3,"semester":2,"prerequisites":["logic"]},
+    {"id":"algo","code":"INF301","name":"Estructuras de datos","credits":4,"semester":3,"prerequisites":["prog2","logic"],"area":"Desarrollo de software"},
+    {"id":"db","code":"INF302","name":"Bases de datos","credits":4,"semester":3,"prerequisites":["prog2"],"area":"Ciencia de datos"},
+    {"id":"net","code":"INF303","name":"Redes y sistemas operativos","credits":3,"semester":3,"prerequisites":["arch"],"area":"Ciberseguridad"},
+    {"id":"web","code":"INF401","name":"Desarrollo de aplicaciones web","credits":4,"semester":4,"prerequisites":["algo","db"],"area":"Desarrollo de software"},
+    {"id":"ai","code":"INF402","name":"Inteligencia artificial","credits":4,"semester":4,"prerequisites":["algo","stats"],"area":"Inteligencia artificial"},
+    {"id":"sec","code":"INF403","name":"Seguridad informática","credits":3,"semester":4,"prerequisites":["net"],"area":"Ciberseguridad"},
+    {"id":"data","code":"INF501","name":"Minería de datos","credits":4,"semester":5,"prerequisites":["ai","db"],"area":"Ciencia de datos"},
+    {"id":"eng","code":"INF502","name":"Ingeniería de software","credits":4,"semester":5,"prerequisites":["web"],"area":"Desarrollo de software"},
+    {"id":"ethics","code":"HUM501","name":"Ética y tecnología","credits":2,"semester":5,"prerequisites":["comm"]},
+    {"id":"project","code":"INF601","name":"Proyecto integrador","credits":6,"semester":6,"prerequisites":["data","eng","ethics","sec"]}
+  ]
+}
