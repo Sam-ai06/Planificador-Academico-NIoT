@@ -1,0 +1,12 @@
+import { createBrowserRouter, Link } from 'react-router-dom';
+import { MainLayout } from '../components/layout/MainLayout';
+import { Dashboard } from '../features/dashboard/Dashboard';
+import { CurriculumViewer } from '../features/curriculum/CurriculumViewer';
+import { StudentProfile } from '../features/student/StudentProfile';
+import { AcademicPlanner } from '../features/planner/AcademicPlanner';
+import { ScenarioComparison } from '../features/scenarios/ScenarioComparison';
+import { ReplanningPanel } from '../features/replanning/ReplanningPanel';
+import { AcademicAssistant } from '../features/assistant/AcademicAssistant';
+import { PlanExporter } from '../features/export/PlanExporter';
+import { CurriculumManager } from '../features/administration/CurriculumManager';
+export const router = createBrowserRouter([{ element: <MainLayout />, children: [{ index: true, element: <Dashboard /> }, ...([['curriculum', <CurriculumViewer />], ['profile', <StudentProfile />], ['planner', <AcademicPlanner />], ['scenarios', <ScenarioComparison />], ['replanning', <ReplanningPanel />], ['assistant', <AcademicAssistant />], ['export', <PlanExporter />], ['curriculums', <CurriculumManager />]] as const).map(([path, element]) => ({ path, element })), { path: '*', element: <section className="empty"><h1>Página no encontrada</h1><Link to="/">Volver al resumen</Link></section> }] }]);

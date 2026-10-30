@@ -1,0 +1,11 @@
+.pdf-metadata { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.pdf-converter fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.pdf-converter ul { list-style: disc; padding-left: 20px; }
+.pdf-converter li { margin: 6px 0; }
+.pdf-result { border-top: 1px solid #e8dfef; padding-top: 15px; margin-top: 25px; }
+.json-editor { font-family: Consolas, monospace; font-size: 12px; line-height: 1.6; min-height: 360px; tab-size: 2; }
+.conversion-success { color: #783d99; }
+.relation-review { padding: 12px; border: 1px solid #e8dfef; border-radius: 8px; margin: 10px 0; }
+.relation-review label { margin-bottom: 5px; }
+.pdf-source-preview { width: 100%; min-height: 520px; border: 1px solid #e8dfef; border-radius: 8px; }
+@media (max-width: 850px) { .pdf-metadata { grid-template-columns: 1fr; gap: 0; } }
