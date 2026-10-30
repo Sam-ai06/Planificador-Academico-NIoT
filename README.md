@@ -1,1 +1,1 @@
-# Planificador-Acad-mico-NIoT
+# Planificador-Academico-NIoT
